@@ -27,17 +27,3 @@
 		</form>
 	</div>
 </div>
- 
-   
-<!-- <div class="d-flex justify-content-center align-items-center h-100">
-   	<form method="GET" action="" class="col-3">
-        <div class="form-group">
-            <input type="text" id="loginId" name="loginId" class="form-control" placeholder="아이디를 입력해주세요">
-        </div>
-        <div class="form-group">
-            <input type="text" id="password" name="password" class="form-control" placeholder="비밀번호를 입력해주세요">
-        </div>
-        <button type="submit" id="signInBtn" name="signInBtn" class="btn btn-primary w-100">로그인</button>
-        <button type="submit" id="signUpBtn" name="signUpBtn" class="btn btn-dark d-block w-100 mt-2">회원가입</button>
-   	</form>
-</div> -->

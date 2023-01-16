@@ -41,6 +41,14 @@ public class UserRestController {
 		return result;
 	}
 	
+	/**
+	 * 회원가입 API
+	 * @param loginId
+	 * @param password
+	 * @param name
+	 * @param email
+	 * @return
+	 */
 	@PostMapping("/sign_up")
 	public Map<String, Object> signUp(
 			@RequestParam("loginId") String loginId,
@@ -61,7 +69,7 @@ public class UserRestController {
 		result.put("code", 1);
 		result.put("result", "성공");
 		//result.put("code", 500); // ?
-		result.put("errorMessage", "회원가입에 실패했습니다.");
+		//result.put("errorMessage", "회원가입에 실패했습니다.");
 		
 		return result;
 	}

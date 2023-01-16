@@ -19,6 +19,11 @@ public class UserController {
 		return "template/layout";
 	}
 	
+	/**
+	 * 로그인 화면
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/sign_in_view")
 	public String signInView(Model model) {
 		model.addAttribute("viewName", "user/signIn");
