@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -28,5 +30,15 @@ public class UserController {
 	public String signInView(Model model) {
 		model.addAttribute("viewName", "user/signIn");
 		return "template/layout";
+	}
+	
+	@GetMapping("/sign_out")
+	public String signOut(HttpSession session) {
+		// 로그아웃 => 세선에 있는 것들을 모두 비운다.
+		session.removeAttribute("userId");
+		session.removeAttribute("userLoginId");
+		session.removeAttribute("userName");
+		
+		return "redirect:/user/sign_in_view"; // 로그아웃 후 로그인 페이지로 리다이렉트. 이미 로그인 페이지가 있어서 그쪽으로 보낸다.
 	}
 }

@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.memo.common.EncryptUtils;
 import com.memo.user.bo.UserBO;
+import com.memo.user.model.User;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/user")
@@ -29,7 +33,14 @@ public class UserRestController {
 			@RequestParam("loginId") String loginId) {
 		
 		Map<String, Object> result = new HashMap<>();
-		boolean isDuplicated = userBO.existLoginId(loginId);
+		boolean isDuplicated = false;
+//		try {
+//			boolean isDuplicated = userBO.existLoginId(loginId);
+//		} catch (Exception e) {
+//			result.put("code", 1);
+//			result.put("result", true);
+//			return;
+//		}
 		if (isDuplicated) { // 중복일 때
 			result.put("code", 1);
 			result.put("result", true); // userBO.existLoginId(loginId)로도 가능
@@ -70,6 +81,39 @@ public class UserRestController {
 		result.put("result", "성공");
 		//result.put("code", 500); // ?
 		//result.put("errorMessage", "회원가입에 실패했습니다.");
+		
+		return result;
+	}
+	
+	@PostMapping("/sign_in")
+	public Map<String, Object> signIn(
+			@RequestParam("loginId") String loginId,
+			@RequestParam("password") String password,
+			HttpServletRequest request) {
+		
+		// 비밀번호 해싱
+		String hashedPassword = EncryptUtils.md5(password); // DB select없는 상태에서 브레이크포인트로 디버깅 검사하기
+		
+		// DB select
+		User user = userBO.getUserByLoginIdPassword(loginId, hashedPassword); // 이 로직에 대한 실패는 try catch로 잡는다.
+		
+		Map<String, Object> result = new HashMap<>();
+		if (user != null) {
+			// 행이 있으면 로그인
+			result.put("code", 1);
+			result.put("result", "성공");
+			
+			// 세션에 유저 정보를 담는다.(로그인 상태 유지. 모든 곳에서 로그인이 사용가능하다.)
+			// 너무 아무거나 막 담으면 안된다.
+			HttpSession session = request.getSession();
+			session.setAttribute("userId", user.getId());
+			session.setAttribute("userLoginId", user.getLoginId());
+			session.setAttribute("userName", user.getName());
+		} else {
+			// 행이 없으면 로그인 실패
+			result.put("code", 500);
+			result.put("errorMessage", "존재하지 않는 사용자입니다.");
+		}
 		
 		return result;
 	}
