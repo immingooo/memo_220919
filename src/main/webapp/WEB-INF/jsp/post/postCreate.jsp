@@ -55,7 +55,7 @@
 			// 파일이 업로드 된 경우에만 확장자 체크(파일이 없을 땐 공백임)
 			if (file != '') {
 				//alert(file.split(".").pop().toLowerCase()); // .pop(): 제일마지막에 쌓인 애를 뽑아낸다. 전부 소문자(나 대문자)로 바꾼다.
-				let ext = file.split(".").pop().toLowerCase();
+				let ext = file.split(".").pop().toLowerCase(); // 확장자
 				if ($.inArray(ext, ['jpg', 'jpeg', 'png', 'gif']) == -1) { // $.inArray(): 이 배열에 있는지. 없으면 -1리턴
 					alert("이미지 파일만 업로드 할 수 있습니다.");
 					$('#file').val(""); // 잘못된 파일을 비운다.
@@ -70,7 +70,7 @@
 			let formData = new FormData(); // 비어있는 form태그 만듦
 			formData.append("subject", subject); // name지정 "request parameter", 값
 			formData.append("content", content);
-			formData.append("file", $('#file')[0].files[0]); // file태그중에 0번째 하나 올림. 여러개 이미지올리는건 구글링으로 찾아보기
+			formData.append("file", $('#file')[0].files[0]); // (여러개의 file태그가 있다는 가정하에) file태그중에 첫번째 file태그에서 첫번째 이미지파일을 올림(file태그가 여러개의 이미지를 가지고있다는 가정). 여러개 이미지올리는건 구글링으로 찾아보기
 			
 			// ajax 통신으로 formData에 있는 데이터 전송
 			$.ajax({

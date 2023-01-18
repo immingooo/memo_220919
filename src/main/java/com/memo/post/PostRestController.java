@@ -31,7 +31,7 @@ public class PostRestController {
 		// 로그인 정보받음
 		int userId = (int)session.getAttribute("userId"); // Object여서 원래 타입으로 캐스팅. Integer은 따로 null검사해야함 => 디버깅으로 검사해야함
 		String userLoginId = (String)session.getAttribute("userLoginId");
-		// 세션에 있는 정보 가져와서 (회원가입 된)권한이 있는지 판단하고 사용자 정보 없으면 리다이렉트 => 나중에
+		// 저장버튼 눌렀을 때 세션에 있는 정보 가져와서 (회원가입 됐는지)글을 작성할 권한이 있는지 판단하고 사용자 정보 없으면 리다이렉트 => 나중에
 		
 		// DB Insert
 		int rowCount = postBO.addPost(userId, userLoginId, subject, content, file);

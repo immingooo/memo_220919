@@ -26,7 +26,7 @@ public class PostBO {
 		}
 		
 		//return 1;
-		// dao insert
+		// DAO insert
 		return postDAO.insertPost(userId, subject, content, imagePath);
 	}
 }
