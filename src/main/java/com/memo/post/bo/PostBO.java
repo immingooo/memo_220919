@@ -36,4 +36,8 @@ public class PostBO {
 	public List<Post> getPostListByUserId(int userId) { // 여기선 userId가 null이 되면 안돼서 int로
 		return postDAO.selectPostListByUserId(userId);
 	}
+	
+	public Post getPostByPostIdUserId(int postId, int userId) {
+		return postDAO.selectPostByPostIdUserId(postId, userId);
+	}
 }

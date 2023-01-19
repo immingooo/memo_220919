@@ -54,6 +54,7 @@ public class PostController {
 			@RequestParam("postId") int postId,
 			HttpSession session,
 			Model model) { // 로그인이 됐는지도 확인
+		
 		// 로그인 된 사람만 오는 로직은 나중에 공통으로 처리하긴 할 예정
 		Integer userId = (Integer)session.getAttribute("userId");
 		if (userId == null) {
@@ -61,7 +62,9 @@ public class PostController {
 		}
 		
 		// DB select by - userId, postId 내가 쓴 글 하나 가져오기
+		Post post = postBO.getPostByPostIdUserId(postId, userId); // 디버깅
 		
+		model.addAttribute("post", post);
 		model.addAttribute("viewName", "post/postDetail");
 		return "template/layout";
 	}
