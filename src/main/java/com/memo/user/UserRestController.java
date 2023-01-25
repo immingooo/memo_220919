@@ -33,7 +33,8 @@ public class UserRestController {
 			@RequestParam("loginId") String loginId) {
 		
 		Map<String, Object> result = new HashMap<>();
-		boolean isDuplicated = false;
+		boolean isDuplicated = userBO.existLoginId(loginId);
+		//boolean isDuplicated = false;
 //		try {
 //			boolean isDuplicated = userBO.existLoginId(loginId);
 //		} catch (Exception e) {
@@ -43,7 +44,7 @@ public class UserRestController {
 //		}
 		if (isDuplicated) { // 중복일 때
 			result.put("code", 1);
-			result.put("result", true); // userBO.existLoginId(loginId)로도 가능
+			result.put("result", true); // true대신 userBO.existLoginId(loginId)로도 가능
 		} else { // 사용 가능
 			result.put("code", 1);
 			result.put("result", false);
