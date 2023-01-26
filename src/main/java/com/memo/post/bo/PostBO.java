@@ -46,13 +46,13 @@ public class PostBO {
 		// 기존 글을 가져온다. (이미지가 교체될 때 기존 이미지 제거를 위해서) - 기존 글이 없는 경우(이상한 상황)도 체크해야 함
 		Post post = getPostByPostIdUserId(postId, userId); // userId까지 있으면 완전히 내가 쓴 글만 가져올 수 있어서 안전한 코드!(postId만 있으면 사용자가 쓴 글이 아닌게 올 수 있음)
 		if (post == null) { // 이상한 상황
-			logger.warn("[update post] 수정할 메모가 존재하지 않습니다. postId:{}, userId{}", postId, userId); // 적절한 레벨로 정해서 사용하면 됨
+			logger.warn("[update post] 수정할 메모가 존재하지 않습니다. postId:{}, userId{}", postId, userId); // 적절한 레벨로 정해서 사용하면 됨. {와일드카드}로 핵심 정보도 넣어서 로그를 찍을 수 있다.
 			return;
 		}
 		
 		// 만약에 멀티파일이 비어있지 않다면 업로드 후 imagePath를 받아와야 함 - 만약에 업로드가 성공하면 기존 이미지 제거, 그렇지 않으면 기존 이미지가 있도록
 		String imagePath = null;
-		if (file != null) {
+		if (file != null) { // 수정할 이미지파일이 있을 때에만
 			// 업로드 요청
 			imagePath = fileManagerService.saveFile(userLoginId, file);
 			

@@ -37,7 +37,7 @@
 		$('#postUpdateBtn').on('click', function() {
 			//alert(1111);
 			let subject = $('#subject').val().trim();
-			if (subject == '') {
+			if (subject == '') { // 제목은 필수항목이여서 validation 검사하기
 				alert("제목을 입력해주세요");
 				return;
 			}
@@ -48,7 +48,7 @@
 			let file = $('#file').val(); 
 			console.log(file); // C:\fakepath\cookie-756601_960_720.jpg
 			
-			// 파일이 업로드 된 경우에 확장자 체크
+			// 파일이 새로 업로드 된 경우에 확장자 체크
 			if (file != '') {
 				let ext = file.split(".").pop().toLowerCase(); // 확장자
 				if ($.inArray(ext, ['jpg', 'jpeg', 'png', 'gif']) == -1) { // $.inArray(): 이 배열에 있는지. 없으면 -1리턴
@@ -60,7 +60,8 @@
 			
 			let postId = $(this).data('post-id');
 			//alert(postId);
-			// 폼태그를 자바스크립트에서 만든다.
+			
+			// 폼태그를 자바스크립트에서 만든다.(이미지 파일이 있어서 폼태그로 보낸다.)
 			let formData = new FormData();
 			formData.append("postId", postId);
 			formData.append("subject", subject);
