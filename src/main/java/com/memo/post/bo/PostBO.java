@@ -68,6 +68,25 @@ public class PostBO {
 		postDAO.updatePostByPostIdUserId(postId, userId, subject, content, imagePath);
 	}
 	
+	// 글 삭제
+	public int deletePostByPostIdUserId(int postId, int userId) {
+		// 기존 글 가져와서 이미지가 있으면 이미지를 제거해달라하고 DB행을 삭제해야함
+		// 기존 글 가져오기
+		Post post = getPostByPostIdUserId(postId, userId);
+		if (post == null) { // 없는 이상한 경우가 있을 수도 있어서 꼭 null체크를 해야함
+			logger.warn("[글 삭제] post is null. postId:{}, userId:{}", postId, userId);
+			return 0;
+		}
+		
+		// 업로드 되었던 이미지가 있으면 파일 삭제
+		if (post.getImagePath() != null) { // 이미지가 있을 때 제거
+			fileManagerService.deleteFile(post.getImagePath());
+		}
+		
+		// DB delete
+		return postDAO.deletePostByPostIdUserId(postId, userId);
+	}
+	
 	public List<Post> getPostListByUserId(int userId) { // 여기선 userId가 null이 되면 안돼서 int로
 		return postDAO.selectPostListByUserId(userId);
 	}
